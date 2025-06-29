@@ -21,7 +21,7 @@ let urlServer = "";
 let urlServerBackend;
 if (checkDB === "tcdvthu") {
   thumucbienlai =
-    "/home/thuan/ashn_client/static/bienlaidientu/bienlai";
+    "/home/thuan/aspd_client/static/bienlaidientu/bienlai";
   // "D:\\";    // test máy tuấn máy bàn
   // var folderBienlaidientu =
   // "/Users/apple/Documents/code/p_159/tcdvthu_ansinh159_client/static/bienlaidientu"; // macos
@@ -30,8 +30,8 @@ if (checkDB === "tcdvthu") {
   urlServerBackend = "14.224.148.17:1552"; // phủ diễn
 } else if (checkDB === "tcdvthu_hungnguyen") {
   thumucbienlai =
-    "/home/thuan/ashn_client/static/bienlaidientu/bienlai";
-    // "D:\\";  
+    // "/home/thuan/ashn_client/static/bienlaidientu/bienlai";
+    "D:\\";  
   urlServer = "14.224.129.177:4020";
   urlServerBackend = "14.224.148.17:4019"; // hưng nguyên
 }
