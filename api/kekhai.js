@@ -30,8 +30,8 @@ if (checkDB === "tcdvthu") {
   urlServerBackend = "14.224.148.17:1552"; // phủ diễn
 } else if (checkDB === "tcdvthu_hungnguyen") {
   thumucbienlai =
-    // "/home/thuan/ashn_client/static/bienlaidientu/bienlai";
-    "D:\\";  
+    "/home/thuan/ashn_client/static/bienlaihungnguyen/bienlai";
+    // "D:\\";  
   urlServer = "14.224.129.177:4020";
   urlServerBackend = "14.224.148.17:4019"; // hưng nguyên
 }
