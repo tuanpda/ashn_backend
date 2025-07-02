@@ -304,8 +304,7 @@ router.get("/dmbenhvienwithtinh", async (req, res) => {
 router.get("/dmbenhvienwithtinh-camxuyen", async (req, res) => {
   try {
     await pool.connect();
-    const result = await pool.request()
-      .query(`SELECT * 
+    const result = await pool.request().query(`SELECT * 
 FROM dm_benhvien 
 WHERE matinh = '42' 
   AND diachi LIKE N'%cẩm xuyên%' or diachi LIKE N'%kỳ anh%'`);
@@ -320,11 +319,25 @@ WHERE matinh = '42'
 router.get("/dmbenhvienwithtinh-dienchau", async (req, res) => {
   try {
     await pool.connect();
-    const result = await pool.request()
-      .query(`SELECT * 
+    const result = await pool.request().query(`SELECT * 
 FROM dm_benhvien 
 WHERE matinh = '40' 
   AND diachi LIKE N'%diễn châu%'`);
+    const benhvien = result.recordset;
+    res.json(benhvien);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// danh mục bệnh viện cho khu vực diễn châu
+router.get("/dmbenhvienwithtinh-hungnguyen", async (req, res) => {
+  try {
+    await pool.connect();
+    const result = await pool.request().query(`SELECT * 
+FROM dm_benhvien 
+WHERE matinh = '40' 
+  AND diachi LIKE N'%hưng nguyên%'`);
     const benhvien = result.recordset;
     res.json(benhvien);
   } catch (error) {
@@ -336,8 +349,7 @@ WHERE matinh = '40'
 router.get("/dmxaphuong-camxuyen", async (req, res) => {
   try {
     await pool.connect();
-    const result = await pool.request()
-      .query(`SELECT * 
+    const result = await pool.request().query(`SELECT * 
 FROM dm_xaphuong 
 WHERE matinh = '42' 
   AND maquanhuyen='449' or maquanhuyen='446' or maquanhuyen='447'`);
