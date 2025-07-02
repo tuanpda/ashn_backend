@@ -20,8 +20,7 @@ let thumucbienlai = "";
 let urlServer = "";
 let urlServerBackend;
 if (checkDB === "tcdvthu") {
-  thumucbienlai =
-    "/home/thuan/aspd_client/static/bienlaidientu/bienlai";
+  thumucbienlai = "/home/thuan/aspd_client/static/bienlaidientu/bienlai";
   // "D:\\";    // test máy tuấn máy bàn
   // var folderBienlaidientu =
   // "/Users/apple/Documents/code/p_159/tcdvthu_ansinh159_client/static/bienlaidientu"; // macos
@@ -29,9 +28,8 @@ if (checkDB === "tcdvthu") {
   urlServer = "14.224.148.17:4042";
   urlServerBackend = "14.224.148.17:1552"; // phủ diễn
 } else if (checkDB === "tcdvthu_hungnguyen") {
-  thumucbienlai =
-    "/home/thuan/ashn_client/static/bienlaihungnguyen/bienlai";
-    // "D:\\";  
+  thumucbienlai = "/home/thuan/ashn_client/static/bienlaihungnguyen/bienlai";
+  // "D:\\";
   urlServer = "14.224.129.177:4020";
   urlServerBackend = "14.224.148.17:4019"; // hưng nguyên
 }
@@ -66,7 +64,6 @@ router.post("/upload-bienlai", upload.single("pdf"), (req, res) => {
 
   return res.json({ message: "Lưu thành công", path: req.file.path });
 });
-
 
 // add ke khai chạy lẻ từng dòng
 router.post("/add-kekhai", async (req, res) => {
@@ -929,7 +926,7 @@ router.post("/apply-invoice-status", async (req, res) => {
 // xác nhận huỷ duyệt hồ sơ
 router.post("/cancel-invoice-status", async (req, res) => {
   // console.log(req.body);
-  
+
   const { _id, hoten, masobhxh, ghichu } = req.body;
 
   let transaction = null;
@@ -1940,13 +1937,13 @@ router.get("/kykekhai-search-hoso", async (req, res) => {
 
     // Thêm các điều kiện tìm kiếm nếu có
     if (trangthaihs) {
-      if(trangthaihs == 'dapheduyet'){
+      if (trangthaihs == "dapheduyet") {
         query += " AND trangthai = 0 and status_naptien=1";
         queryCount += " AND trangthai = 0 and status_naptien=1";
-      }else if(trangthaihs == 'dahuyduyet'){
+      } else if (trangthaihs == "dahuyduyet") {
         query += " AND trangthai = 1";
         queryCount += " AND trangthai = 1";
-      }else if(trangthaihs == 'chuapheduyet'){
+      } else if (trangthaihs == "chuapheduyet") {
         query += " AND trangthai = 0 and status_naptien=0";
         queryCount += " AND trangthai = 0 and status_naptien=0";
       }
@@ -2098,23 +2095,22 @@ router.get("/kykekhai-search-hoso-diemthu", async (req, res) => {
 
     // Khởi tạo câu truy vấn cơ bản
     let query = `SELECT * FROM kekhai WHERE RIGHT(sohoso, 12)='${cccd}'`;
-    let queryCount =
-      `SELECT COUNT(*) AS totalCount FROM kekhai WHERE RIGHT(sohoso, 12)='${cccd}'`;
+    let queryCount = `SELECT COUNT(*) AS totalCount FROM kekhai WHERE RIGHT(sohoso, 12)='${cccd}'`;
 
     // Thêm các điều kiện tìm kiếm nếu có
     if (trangthaihs) {
-      if(trangthaihs == 'dapheduyet'){
+      if (trangthaihs == "dapheduyet") {
         query += " AND trangthai = 0 and status_naptien=1";
         queryCount += " AND trangthai = 0 and status_naptien=1";
-      }else if(trangthaihs == 'dahuyduyet'){
+      } else if (trangthaihs == "dahuyduyet") {
         query += " AND trangthai = 1";
         queryCount += " AND trangthai = 1";
-      }else if(trangthaihs == 'chuapheduyet'){
+      } else if (trangthaihs == "chuapheduyet") {
         query += " AND trangthai = 0 and status_naptien=0";
         queryCount += " AND trangthai = 0 and status_naptien=0";
       }
     }
-    
+
     if (kykekhai) {
       query += " AND kykekhai = @kykekhai";
       queryCount += " AND kykekhai = @kykekhai";
@@ -2850,7 +2846,6 @@ router.post("/thongke-hosokekhai", async (req, res) => {
             WHERE RIGHT(sohoso, 12) = @cccd
             `;
 
-
     const result = await request.query(query);
     const data = result.recordset[0];
 
@@ -3007,6 +3002,9 @@ router.get("/baocao-tongtien-daily-theo-thang-nam", async (req, res) => {
 
     const cccd = req.query.cccd;
     const nam = parseInt(req.query.nam);
+    const thang = parseInt(req.query.thang);
+
+    console.log(`CCCD: ${cccd}, Năm: ${nam}, Tháng: ${thang}`);
 
     if (!cccd || !nam) {
       return res.status(400).json({
@@ -3022,13 +3020,15 @@ router.get("/baocao-tongtien-daily-theo-thang-nam", async (req, res) => {
       FROM kekhai
       WHERE 
         TRY_CONVERT(datetime, ngaykekhai, 105) IS NOT NULL
-        AND YEAR(CONVERT(datetime, ngaykekhai, 105)) = @nam
-        AND RIGHT(sohoso, 12) = ${cccd}
+        AND YEAR(CONVERT(datetime, ngaykekhai, 105)) = ${nam}
+        AND MONTH(TRY_CONVERT(datetime, ngaykekhai, 105)) = ${thang}
+        AND RIGHT(sohoso, 12) = '${cccd}'
       GROUP BY MONTH(CONVERT(datetime, ngaykekhai, 105))
       ORDER BY thang
     `;
 
     request.input("nam", nam);
+    request.input("thang", thang);
     request.input("cccd", cccd);
 
     const result = await request.query(query);
@@ -3135,7 +3135,6 @@ router.get("/tim-dulieuthe", async (req, res) => {
       query += ` AND hoTen LIKE @hoTen`;
       request.input("hoTen", `%${hoTen.trim()}%`);
     }
-
 
     if (!isSoSoEmpty) {
       query += ` AND soSoBhxh = @soSoBhxh`;
