@@ -2638,9 +2638,9 @@ router.post("/hosoloitrave-diemthu", async (req, res) => {
     await pool.connect();
     const result = await pool
       .request()
-      .input("madaily", req.body.madaily)
+      .input("cccd", req.body.cccd)
       .query(
-        `select * from kekhai where trangthai = 1 and madaily=@madaily order by _id desc`
+        `select * from kekhai where trangthai = 1 and RIGHT(sohoso,12)=@cccd order by _id desc`
       );
     const hs = result.recordset;
     res.json({
@@ -2700,9 +2700,9 @@ router.post("/hosochuadaylencongbhvn-diemthu", async (req, res) => {
     await pool.connect();
     const result = await pool
       .request()
-      .input("madaily", req.body.madaily)
+      .input("cccd", req.body.cccd)
       .query(
-        `select * from kekhai where trangthai = 0 and status_naptien=0 and madaily=@madaily order by _id desc`
+        `select * from kekhai where trangthai = 0 and status_naptien=0 and RIGHT(sohoso,12)=@cccd order by _id desc`
       );
     const hs = result.recordset;
     res.json({
@@ -2743,9 +2743,9 @@ router.post("/hosodadaylencongbhvn-diemthu", async (req, res) => {
     await pool.connect();
     const result = await pool
       .request()
-      .input("madaily", req.body.madaily)
+      .input("cccd", req.body.cccd)
       .query(
-        `select * from kekhai where trangthai = 0 and status_naptien=1 and madaily=@madaily order by _id desc`
+        `select * from kekhai where trangthai = 0 and status_naptien=1 and RIGHT(sohoso,12)=@cccd order by _id desc`
       );
     const hs = result.recordset;
     res.json({
@@ -2784,9 +2784,10 @@ router.post("/allsonguoidakekhai-diemthu", async (req, res) => {
     await pool.connect();
     const result = await pool
       .request()
-      .input("madaily", req.body.madaily)
-      .query(`select * from kekhai where madaily=@madaily order by _id desc`);
+      .input("cccd", req.body.cccd)
+      .query(`select * from kekhai where RIGHT(sohoso,12)=@cccd order by _id desc`);
     const hs = result.recordset;
+    console.log(hs)
     res.json({
       success: true,
       hs,
@@ -2795,7 +2796,6 @@ router.post("/allsonguoidakekhai-diemthu", async (req, res) => {
     res.status(500).json(error);
   }
 });
-
 // hồ sơ chưa đẩy lên cổng tài khoản điểm thu
 router.get("/view-item-bienlai", async (req, res) => {
   try {

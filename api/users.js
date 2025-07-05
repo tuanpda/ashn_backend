@@ -9,7 +9,7 @@ const fs = require("fs");
 const path = require("path");
 
 var folderAvatar = "/home/thuan/aspd_client/static/avatar";
-var urlServer = "14.224.148.17:4042";
+var urlServer = "http://ansinhxahoiphudien.vn/";
 
 // SET STORAGE
 var storage = multer.diskStorage({
@@ -97,7 +97,7 @@ router.patch("/user/:_id", upload.single("avatar"), async (req, res) => {
   if (!req.file) {
     linkAvatar = req.body.avatar;
   } else {
-    linkAvatar = `http://${urlServer}/${req.file.filename}`;
+    linkAvatar = `${urlServer}/avatar/${req.file.filename}`;
   }
   try {
     await pool.connect();
@@ -173,7 +173,7 @@ router.post("/user/fix", upload.single("avatar"), async (req, res) => {
         }
       });
     }
-    linkAvatar = `http://${urlServer}/avatar/${req.file.filename}`;
+    linkAvatar = `${urlServer}/avatar/${req.file.filename}`;
   }
   try {
     await pool.connect();
@@ -260,7 +260,7 @@ router.post("/user/fix-info", upload.single("avatar"), async (req, res) => {
         }
       });
     }
-    linkAvatar = `http://${urlServer}/avatar/${req.file.filename}`;
+    linkAvatar = `${urlServer}/avatar/${req.file.filename}`;
   }
   try {
     await pool.connect();
@@ -328,7 +328,7 @@ router.post(
           }
         });
       }
-      linkAvatar = `http://${urlServer}/avatar/${req.file.filename}`;
+      linkAvatar = `${urlServer}/avatar/${req.file.filename}`;
     }
     try {
       await pool.connect();
@@ -546,7 +546,7 @@ router.post("/account", upload.single("avatar"), async (req, res) => {
     linkAvatar = req.body.avatar;
   } else {
     // Đổi đường dẫn khi deploy lên máy chủ
-    linkAvatar = `http://${urlServer}/avatar/${req.file.filename}`;
+    linkAvatar = `${urlServer}/avatar/${req.file.filename}`;
   }
   try {
     await pool.connect();
@@ -612,7 +612,7 @@ router.post(
       linkAvatar = req.body.avatar;
     } else {
       // Đổi đường dẫn khi deploy lên máy chủ
-      linkAvatar = `http://${urlServer}/avatar/${req.file.filename}`;
+      linkAvatar = `${urlServer}/avatar/${req.file.filename}`;
     }
     try {
       await pool.connect();
@@ -669,7 +669,7 @@ router.post(
           return;
         }
       });
-      linkAvatar = `http://${urlServer}/avatar/${req.file.filename}`;
+      linkAvatar = `${urlServer}/avatar/${req.file.filename}`;
     }
     try {
       await pool.connect();
